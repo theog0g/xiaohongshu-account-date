@@ -46,12 +46,21 @@ function getCreatedDate(userId) {
     return `${values.year}-${values.month}-${values.day}`;
 }
 
-if (body?.data?.userid && body.data.red_id) {
+if (body?.data?.userid) {
     const createdDate = getCreatedDate(body.data.userid);
 
     if (createdDate) {
-        body.data.red_id =
-            `${body.data.red_id}  创建于 ${createdDate}`;
+        // 英文界面通常使用 ip_location
+        if (body.data.ip_location) {
+            body.data.ip_location =
+                `${body.data.ip_location}  ·  创建于 ${createdDate}`;
+        }
+
+        // 中文界面可能使用 location
+        if (body.data.location) {
+            body.data.location =
+                `${body.data.location}  ·  创建于 ${createdDate}`;
+        }
     }
 }
 
