@@ -53,13 +53,13 @@ if (body?.data?.userid) {
         // 英文界面通常使用 ip_location
         if (body.data.ip_location) {
             body.data.ip_location =
-                `${body.data.ip_location}  \n  创建于 ${createdDate}`;
+                `${body.data.ip_location}  创建于 ${createdDate}`;
         }
 
         // 中文界面可能使用 location
         if (body.data.location) {
             body.data.location =
-                `${body.data.location}  \n  创建于 ${createdDate}`;
+                `${body.data.location}  创建于 ${createdDate}`;
         }
     }
 }
