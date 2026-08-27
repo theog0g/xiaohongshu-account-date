@@ -40,6 +40,19 @@ Web 版本中，将鼠标悬停在创建日期上，还可以看到对应 User I
 * 需要开启 Rewrite
 * 需要开启 MITM 并正确安装、信任 Quantumult X CA 证书
 
+## 快速安装
+
+### Tampermonkey
+
+[安装 / 查看 Tampermonkey 脚本](https://raw.githubusercontent.com/theog0g/xiaohongshu-account-date/main/xiaohongshu-account-date.user.js)
+
+### Quantumult X
+
+将下面的远程 Rewrite 地址添加到 Quantumult X：
+
+```text
+https://raw.githubusercontent.com/theog0g/xiaohongshu-account-date/main/quantumultx/xiaohongshu-account-date.conf
+
 ## 项目结构
 
 ```text
@@ -118,34 +131,6 @@ User ID
 
 项目中的 Web 和 Quantumult X 版本使用相同的时间解析思路，区别主要在于获取 User ID 和修改页面显示的方式。
 
-## Web 版安装
-
-### 1. 安装 Tampermonkey
-
-首先安装 Tampermonkey 浏览器扩展。
-
-### 2. 导入脚本
-
-打开 Tampermonkey 管理面板并新建脚本，将：
-
-```text
-xiaohongshu-account-date.user.js
-```
-
-中的代码复制进去并保存。
-
-也可以使用仓库中的 `.user.js` 文件进行安装。
-
-### 3. 打开小红书网页版
-
-访问任意用户主页，例如：
-
-```text
-https://www.xiaohongshu.com/user/profile/xxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-如果该用户 ID 可以正常解析，脚本会自动显示推算出的创建日期。
-
 ## Web 版工作方式
 
 网页版脚本读取当前页面 URL：
@@ -160,97 +145,6 @@ https://www.xiaohongshu.com/user/profile/<userId>
 
 由于小红书网页版采用 SPA 页面结构，脚本还会监听 URL 和页面内容变化，因此从一个博主主页切换到另一个博主主页时，无需刷新页面。
 
-## Quantumult X 安装
-
-Quantumult X 版本由两个文件组成：
-
-```text
-quantumultx/
-├── xiaohongshu-account-date.conf
-└── xiaohongshu-account-date.js
-```
-
-其中：
-
-```text
-xiaohongshu-account-date.conf
-```
-
-负责定义：
-
-* Rewrite 匹配规则
-* JavaScript 脚本地址
-* MITM Hostname
-
-而：
-
-```text
-xiaohongshu-account-date.js
-```
-
-负责实际处理小红书接口返回的数据。
-
-### 1. 配置 MITM
-
-Quantumult X 版本需要开启 MITM，并正确安装和信任 Quantumult X CA 证书。
-
-脚本需要解密：
-
-```text
-edith.xiaohongshu.com
-```
-
-的 HTTPS 流量。
-
-### 2. 添加远程 Rewrite
-
-使用仓库中的：
-
-```text
-quantumultx/xiaohongshu-account-date.conf
-```
-
-作为 Quantumult X Rewrite 远程资源。
-
-配置文件会自动引用对应的 JavaScript 脚本。
-
-### 3. 打开小红书 App
-
-完全关闭小红书 App 后重新打开。
-
-进入任意博主个人主页，如果接口和当前脚本兼容，即可看到根据 User ID 推算出的创建日期。
-
-## Quantumult X 工作方式
-
-小红书 App 在进入用户主页时会请求用户资料接口，例如：
-
-```text
-https://edith.xiaohongshu.com/api/sns/v3/user/info
-```
-
-接口返回的数据中包含：
-
-```json
-{
-  "data": {
-    "userid": "59921a2e50c4b40676883f67",
-    "red_id": "954106650",
-    "location": "浙江"
-  }
-}
-```
-
-Quantumult X 使用 `script-response-body` 在响应交给小红书 App 之前执行 JavaScript。
-
-脚本读取：
-
-```text
-data.userid
-```
-
-计算创建日期，然后修改本地 JSON 响应，使日期能够显示在个人主页。
-
-整个修改过程发生在设备本地。
 
 ## 日期准确性说明
 
