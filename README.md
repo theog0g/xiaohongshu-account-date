@@ -52,6 +52,7 @@ Web 版本中，将鼠标悬停在创建日期上，还可以看到对应 User I
 
 ```text
 https://raw.githubusercontent.com/theog0g/xiaohongshu-account-date/main/quantumultx/xiaohongshu-account-date.conf
+```
 
 ## 项目结构
 
