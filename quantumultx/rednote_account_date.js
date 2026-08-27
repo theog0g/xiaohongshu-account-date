@@ -50,16 +50,23 @@ if (body?.data?.userid) {
     const createdDate = getCreatedDate(body.data.userid);
 
     if (createdDate) {
-        // 英文界面通常使用 ip_location
+        const createdText =
+            `创建于 ${createdDate}`;
+
         if (body.data.ip_location) {
             body.data.ip_location =
-                `${body.data.ip_location}  创建于 ${createdDate}`;
+                `${body.data.ip_location}  ${createdText}`;
+        } else {
+            body.data.ip_location =
+                createdText;
         }
 
-        // 中文界面可能使用 location
         if (body.data.location) {
             body.data.location =
-                `${body.data.location}  创建于 ${createdDate}`;
+                `${body.data.location}  ${createdText}`;
+        } else {
+            body.data.location =
+                createdText;
         }
     }
 }
